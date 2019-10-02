@@ -1,12 +1,11 @@
 ## aws-codepipeline-ecr
 Creates a pipeline that builds a container via codebuild and pushes it to an ECR repo
 
-## Example
+## Usage
 
 ```hcl
 module "ecr_pipeline" {
-  source  = "github.com/globeandmail/aws-codepipeline-ecr"
-  version = "~> 1.0"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.0"
 
   name               = app-name
   ecr_name           = repo-name
