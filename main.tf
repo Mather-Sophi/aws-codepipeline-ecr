@@ -47,7 +47,7 @@ module "codebuild_project" {
   source = "github.com/globeandmail/aws-codebuild-project?ref=1.0"
 
   name        = var.name
-  deploy_type = ecr
+  deploy_type = "ecr"
   ecr_name    = var.ecr_name
   tags        = var.tags
 }
