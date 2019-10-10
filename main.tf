@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "codepipeline_baseline" {
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild"
     ]
-    resources = module.codebuild_project.codebuild_project_arn
+    resources = [module.codebuild_project.codebuild_project_arn]
   }
 
 }
