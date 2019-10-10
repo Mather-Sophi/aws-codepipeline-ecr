@@ -4,7 +4,6 @@ data "aws_caller_identity" "current" {}
 locals {
   aws_region = data.aws_region.current.name
   account_id = data.aws_caller_identity.current.account_id
-  datetime   = formatdate("YYYYMMDDhhmmss", timestamp())
 }
 
 data "aws_iam_policy_document" "codepipeline_assume" {
@@ -19,7 +18,7 @@ data "aws_iam_policy_document" "codepipeline_assume" {
 }
 
 resource "aws_iam_role" "codepipeline" {
-  name               = "codepipeline-${var.name}-${local.datetime}"
+  name               = "codepipeline-${var.name}"
   assume_role_policy = data.aws_iam_policy_document.codepipeline_assume.json
 
   tags = var.tags
@@ -35,6 +34,15 @@ data "aws_iam_policy_document" "codepipeline_baseline" {
       "${module.codebuild_project.artifact_bucket_arn}/*"
     ]
   }
+
+  statement {
+    actions = [
+      "codebuild:BatchGetBuilds",
+      "codebuild:StartBuild"
+    ]
+    resources = module.codebuild_project.codebuild_project_arn
+  }
+
 }
 
 resource "aws_iam_role_policy" "codepipeline_baseline" {
