@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.0"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.1"
 
   name               = app-name
   ecr_name           = repo-name
