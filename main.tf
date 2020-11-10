@@ -57,6 +57,7 @@ module "codebuild_project" {
   name        = var.name
   deploy_type = "ecr"
   ecr_name    = var.ecr_name
+  buildspec   = var.buildspec
   tags        = var.tags
 }
 

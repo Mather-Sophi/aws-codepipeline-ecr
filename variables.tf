@@ -29,6 +29,12 @@ variable "github_oauth_token" {
   description = "GitHub oauth token"
 }
 
+variable "buildspec" {
+  type        = string
+  description = "The name of the buildspec file to use with codebuild"
+  default     = "buildspec.yml"
+}
+
 variable "codebuild_image" {
   type        = string
   description = "The codebuild image to use"
