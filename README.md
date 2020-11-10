@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.1"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.2"
 
   name               = app-name
   ecr_name           = repo-name
@@ -28,6 +28,7 @@ module "ecr_pipeline" {
 | github\_repo\_name | The name of the GitHub repository | string | n/a | yes |
 | github\_oauth\_token | GitHub oauth token | string | n/a | yes |
 | github\_branch\_name | The git branch name to use for the codebuild project | string | `"master"` | no |
+| buildspec | The name of the buildspec file to use | string | buildspec.yml | no |
 | codebuild\_image | The codebuild image to use | string | `"null"` | no |
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
 
