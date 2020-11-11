@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.2"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.3"
 
   name               = app-name
   ecr_name           = repo-name
@@ -17,6 +17,9 @@ module "ecr_pipeline" {
   }
 }
 ```
+
+## v1.3 Note
+The account that owns the guthub token must have admin access on the repo in order to generate a github webhook 
 
 ## Inputs
 
