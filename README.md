@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.3"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.4"
 
   name               = app-name
   ecr_name           = repo-name
@@ -20,6 +20,20 @@ module "ecr_pipeline" {
 
 ## v1.3 Note
 The account that owns the guthub token must have admin access on the repo in order to generate a github webhook 
+
+## v1.4 Note
+If `use_docker_credentials` is set to `true`, the environment variables `DOCKERHUB_USER` and `DOCKERHUB_PASS` are exposed via codebild
+
+You can add these 2 lines to the beginning of your `build` phase commands in `buildspec.yml` to login to Dockerhub
+
+```yml
+  build:
+    commands:
+      - echo "Logging into Dockerhub..."
+      - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
+      ...
+      ...
+```
 
 ## Inputs
 
