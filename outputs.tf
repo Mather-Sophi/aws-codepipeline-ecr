@@ -21,3 +21,7 @@ output "artifact_bucket_id" {
 output "artifact_bucket_arn" {
   value = module.codebuild_project.artifact_bucket_arn
 }
+
+output "code_build_iam_role_arn" {
+  value = module.codebuild_project.code_build_iam_role_arn
+}
