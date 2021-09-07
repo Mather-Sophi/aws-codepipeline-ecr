@@ -35,6 +35,18 @@ You can add these 2 lines to the beginning of your `build` phase commands in `bu
       ...
 ```
 
+## v1.7 Note
+The environment variable `DS_DEPLOY_GITHUB_TOKEN` is exposed via codebild
+
+You can add these 2 lines to the beginning of your `env` sequence in `buildspec.yml` to use this variable in your `build` phase commands.
+
+```yml
+env:
+  secrets-manager:
+    DS_DEPLOY_GITHUB_TOKEN: $DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID
+    ...
+    ...
+```
 ## Inputs
 
 | Name | Description | Type | Default | Required |
