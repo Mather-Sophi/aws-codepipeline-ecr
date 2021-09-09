@@ -22,7 +22,7 @@ module "ecr_pipeline" {
 The account that owns the guthub token must have admin access on the repo in order to generate a github webhook 
 
 ## v1.4 Note
-If `use_docker_credentials` is set to `true`, the environment variables `DOCKERHUB_USER` and `DOCKERHUB_PASS` are exposed via codebild
+If `use_docker_credentials` is set to `true`, the environment variables `DOCKERHUB_USER` and `DOCKERHUB_PASS` are exposed via codebuild
 
 You can add these 2 lines to the beginning of your `build` phase commands in `buildspec.yml` to login to Dockerhub
 
@@ -36,16 +36,19 @@ You can add these 2 lines to the beginning of your `build` phase commands in `bu
 ```
 
 ## v1.7 Note
-The environment variable `DS_DEPLOY_GITHUB_TOKEN` is exposed via codebild
+The secrets manager environment variable `DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild
 
-You can add these 2 lines to the beginning of your `env` sequence in `buildspec.yml` to use this variable in your `build` phase commands.
+You can add the first line to the beginning of your `build` phase commands in `buildspec.yml` to assign the token's secret value to local variable `GITHUB_TOKEN`.
 
-```yml
-env:
-  secrets-manager:
-    DS_DEPLOY_GITHUB_TOKEN: $DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID
-    ...
-    ...
+```yml d
+  build:
+    commands:
+      - export GITHUB_TOKEN=${DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID}
+      ...
+      ...
+      - docker build -t $REPOSITORY_URI:latest --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} .
+      ...
+      ...
 ```
 ## Inputs
 
