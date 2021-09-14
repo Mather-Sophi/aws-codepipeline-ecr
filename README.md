@@ -40,7 +40,7 @@ The secrets manager environment variable `DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID` is 
 
 You can add the first line to the beginning of your `build` phase commands in `buildspec.yml` to assign the token's secret value to local variable `GITHUB_TOKEN`.
 
-```yml d
+```yml
   build:
     commands:
       - export GITHUB_TOKEN=${DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID}
