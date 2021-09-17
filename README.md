@@ -53,12 +53,6 @@ You can add the first line to the beginning of your `build` phase commands in `b
       ...
 ```
 
-The Github oauth access token belongs to Github user `ds-deploy-git-user`, who is a member of the Github team `tgam-data-science`.
-To grant the Github user the ability to clone any repository, the repository must grant Read access to the `tgam-data-science` team.
-See the example below.
-
-![Repository Manage Access](./docs/Github_Repository_Manage_Access.png)
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
