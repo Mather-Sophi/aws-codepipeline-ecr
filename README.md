@@ -36,20 +36,26 @@ You can add these 2 lines to the beginning of your `build` phase commands in `bu
 ```
 
 ## v1.7 Note
-The secrets manager environment variable `DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild
+The secrets manager environment variable `REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild
 
 You can add the first line to the beginning of your `build` phase commands in `buildspec.yml` to assign the token's secret value to local variable `GITHUB_TOKEN`.
 
 ```yml
   build:
     commands:
-      - export GITHUB_TOKEN=${DS_DEPLOY_GITHUB_TOKEN_SECRETS_ID}
+      - export GITHUB_TOKEN=${REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID}
       ...
       ...
       - docker build -t $REPOSITORY_URI:latest --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} .
       ...
       ...
 ```
+
+The Github oauth access token belongs to Github user `ds-deploy-git-user`, who is a member of the Github team `tgam-data-science`.
+To grant the Github user the ability to clone any repository, the repository must grant Read access to the `tgam-data-science` team.
+See the example below.
+![Repository Manage Access](./docs/Github_Repository_Manage_Access.png)
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -63,6 +69,8 @@ You can add the first line to the beginning of your `build` phase commands in `b
 | buildspec | The name of the buildspec file to use | string | buildspec.yml | no |
 | codebuild\_image | The codebuild image to use | string | `"null"` | no |
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
+| central\_account\_github\_token\_aws\_secret\_arn | \(Required\) (Required) The repo access Github token AWS secret ARN in the ds-ml-shared-svcs-prod AWS account | string | n/a | yes |
+| central\_account\_github\_token\_aws\_kms\_cmk\_arn | \(Required\) The repo access Github token AWS KMS customer managed key ARN in the ds-ml-shared-svcs-prod AWS account | string | n/a | yes |
 
 ## Outputs
 
