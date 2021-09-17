@@ -70,7 +70,7 @@ See the example below.
 | buildspec | The name of the buildspec file to use | string | buildspec.yml | no |
 | codebuild\_image | The codebuild image to use | string | `"null"` | no |
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
-| central\_account\_github\_token\_aws\_secret\_arn | \(Required\) (Required) The repo access Github token AWS secret ARN in the ds-ml-shared-svcs-prod AWS account | string | n/a | yes |
+| central\_account\_github\_token\_aws\_secret\_arn | \(Required\) The repo access Github token AWS secret ARN in the ds-ml-shared-svcs-prod AWS account | string | n/a | yes |
 | central\_account\_github\_token\_aws\_kms\_cmk\_arn | \(Required\) The repo access Github token AWS KMS customer managed key ARN in the ds-ml-shared-svcs-prod AWS account | string | n/a | yes |
 
 ## Outputs
