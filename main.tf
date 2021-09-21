@@ -57,7 +57,7 @@ resource "aws_iam_role_policy" "codepipeline_baseline" {
 }
 
 module "codebuild_project" {
-  source = "github.com/globeandmail/aws-codebuild-project?ref=1.6"
+  source = "github.com/globeandmail/aws-codebuild-project?ref=1.7"
 
   name                   = var.name
   deploy_type            = "ecr"
@@ -65,6 +65,8 @@ module "codebuild_project" {
   buildspec              = var.buildspec
   use_docker_credentials = var.use_docker_credentials
   tags                   = var.tags
+  central_account_github_token_aws_secret_arn = var.central_account_github_token_aws_secret_arn
+  central_account_github_token_aws_kms_cmk_arn = var.central_account_github_token_aws_kms_cmk_arn
 }
 
 resource "aws_codepipeline" "pipeline" {

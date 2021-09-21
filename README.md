@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.4"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.7"
 
   name               = app-name
   ecr_name           = repo-name
@@ -15,6 +15,8 @@ module "ecr_pipeline" {
   tags = {
     Environment = var.environment
   }
+  central_account_github_token_aws_secret_arn = central-account-github-token-aws-secret-arn
+  central_account_github_token_aws_kms_cmk_arn = central-account-github-token-aws-kms-cmk-arn
 }
 ```
 
@@ -22,7 +24,7 @@ module "ecr_pipeline" {
 The account that owns the guthub token must have admin access on the repo in order to generate a github webhook 
 
 ## v1.4 Note
-If `use_docker_credentials` is set to `true`, the environment variables `DOCKERHUB_USER` and `DOCKERHUB_PASS` are exposed via codebild
+If `use_docker_credentials` is set to `true`, the environment variables `DOCKERHUB_USER` and `DOCKERHUB_PASS` are exposed via codebuild
 
 You can add these 2 lines to the beginning of your `build` phase commands in `buildspec.yml` to login to Dockerhub
 
@@ -31,6 +33,22 @@ You can add these 2 lines to the beginning of your `build` phase commands in `bu
     commands:
       - echo "Logging into Dockerhub..."
       - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
+      ...
+      ...
+```
+
+## v1.7 Note
+The secrets manager environment variable `REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild
+
+You can add the first line to the beginning of your `build` phase commands in `buildspec.yml` to assign the token's secret value to local variable `GITHUB_TOKEN`.
+
+```yml
+  build:
+    commands:
+      - export GITHUB_TOKEN=${REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID}
+      ...
+      ...
+      - docker build -t $REPOSITORY_URI:latest --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} .
       ...
       ...
 ```
@@ -48,6 +66,8 @@ You can add these 2 lines to the beginning of your `build` phase commands in `bu
 | buildspec | The name of the buildspec file to use | string | buildspec.yml | no |
 | codebuild\_image | The codebuild image to use | string | `"null"` | no |
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
+| central\_account\_github\_token\_aws\_secret\_arn | \(Required\) The repo access Github token AWS secret ARN in the central AWS account | string | n/a | yes |
+| central\_account\_github\_token\_aws\_kms\_cmk\_arn | \(Required\) The repo access Github token AWS KMS customer managed key ARN in the central AWS account | string | n/a | yes |
 
 ## Outputs
 
