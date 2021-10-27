@@ -122,7 +122,7 @@ resource "aws_codepipeline" "pipeline" {
 
 resource "aws_codepipeline_webhook" "github" {
   # Only create the webhook if create_github_webhook is set to true
-  count           = var.create_github_webhook ? 1 : 0
+  count           = var.create_github_webhook == true ? 1 : 0
   name            = var.name
   authentication  = "GITHUB_HMAC"
   target_action   = "Source"
