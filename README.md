@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.7"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.8"
 
   name               = app-name
   ecr_name           = repo-name
@@ -68,6 +68,7 @@ You can add the first line to the beginning of your `build` phase commands in `b
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
 | central\_account\_github\_token\_aws\_secret\_arn | \(Required\) The repo access Github token AWS secret ARN in the central AWS account | string | n/a | yes |
 | central\_account\_github\_token\_aws\_kms\_cmk\_arn | \(Required\) The repo access Github token AWS KMS customer managed key ARN in the central AWS account | string | n/a | yes |
+| create\_github\_webhook | Create the github webhook that triggers codepipeline | bool | `"true"` | no |
 
 ## Outputs
 
