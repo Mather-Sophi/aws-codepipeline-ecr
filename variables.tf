@@ -62,3 +62,10 @@ variable "central_account_github_token_aws_kms_cmk_arn" {
   type = string
   description = "(Required) The repo access Github token AWS KMS customer managed key ARN in the central AWS account"
 }
+
+variable "create_github_webhook" {
+  type        = bool
+  description = "Create the github webhook that triggers codepipeline. Defaults to true"
+  default     = true
+}
+

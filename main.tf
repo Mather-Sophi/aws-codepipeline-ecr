@@ -121,6 +121,8 @@ resource "aws_codepipeline" "pipeline" {
 }
 
 resource "aws_codepipeline_webhook" "github" {
+  # Only create the webhook if create_github_webhook is set to true
+  count           = var.create_github_webhook ? 1 : 0
   name            = var.name
   authentication  = "GITHUB_HMAC"
   target_action   = "Source"
@@ -140,7 +142,7 @@ resource "github_repository_webhook" "aws_codepipeline" {
   repository = var.github_repo_name
 
   configuration {
-    url          = aws_codepipeline_webhook.github.url
+    url          = aws_codepipeline_webhook.github[0].url
     content_type = "json"
     secret       = var.github_oauth_token
   }
