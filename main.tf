@@ -140,6 +140,7 @@ resource "aws_codepipeline_webhook" "github" {
 
 resource "github_repository_webhook" "aws_codepipeline" {
   repository = var.github_repo_name
+  count           = var.create_github_webhook == true ? 1 : 0
 
   configuration {
     url          = aws_codepipeline_webhook.github[0].url
