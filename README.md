@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.8"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.9"
 
   name               = app-name
   ecr_name           = repo-name
@@ -15,8 +15,10 @@ module "ecr_pipeline" {
   tags = {
     Environment = var.environment
   }
-  central_account_github_token_aws_secret_arn = central-account-github-token-aws-secret-arn
-  central_account_github_token_aws_kms_cmk_arn = central-account-github-token-aws-kms-cmk-arn
+  use_repo_access_github_token = true
+  svcs_account_github_token_aws_secret_arn = svcs-account-github-token-aws-secret-arn
+  svcs_account_github_token_aws_kms_cmk_arn = svcs-account-github-token-aws-kms-cmk-arn
+  s3_block_public_access = true
 }
 ```
 
@@ -38,7 +40,7 @@ You can add these 2 lines to the beginning of your `build` phase commands in `bu
 ```
 
 ## v1.7 Note
-The secrets manager environment variable `REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild
+The secrets manager environment variable `REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild.
 
 You can add the first line to the beginning of your `build` phase commands in `buildspec.yml` to assign the token's secret value to local variable `GITHUB_TOKEN`.
 
@@ -53,6 +55,12 @@ You can add the first line to the beginning of your `build` phase commands in `b
       ...
 ```
 
+## v1.9 Note
+If `use_repo_access_github_token` is set to `true`, the environment variable `REPO_ACCESS_GITHUB_TOKEN_SECRETS_ID` is exposed via codebuild.
+Usage remains the same as v1.7.
+If `s3_block_public_access` is set to `true`, the block public access setting for the artifact bucket is enabled.
+
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -66,9 +74,11 @@ You can add the first line to the beginning of your `build` phase commands in `b
 | buildspec | The name of the buildspec file to use | string | buildspec.yml | no |
 | codebuild\_image | The codebuild image to use | string | `"null"` | no |
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
-| central\_account\_github\_token\_aws\_secret\_arn | \(Required\) The repo access Github token AWS secret ARN in the central AWS account | string | n/a | yes |
-| central\_account\_github\_token\_aws\_kms\_cmk\_arn | \(Required\) The repo access Github token AWS KMS customer managed key ARN in the central AWS account | string | n/a | yes |
+| use\_repo\_access\_github\_token | \(Optional\) Allow the AWS codebuild IAM role read access to the REPO\_ACCESS\_GITHUB\_TOKEN secrets manager secret in the shared service account.<br>Defaults to false. | `bool` | `false` | no |
+| svcs\_account\_github\_token\_aws\_secret\_arn | \(Optional\) The AWS secret ARN for the repo access Github token.<br>The secret is created in the shared service account.<br>Required if var.use\_repo\_access\_github\_token is true. | `string` | `null` | no |
+| svcs\_account\_github\_token\_aws\_kms\_cmk\_arn | \(Optional\)  The us-east-1 region AWS KMS customer managed key ARN for encrypting the repo access Github token AWS secret.<br>The key is created in the shared service account.<br>Required if var.use\_repo\_access\_github\_token is true. | `string` | `null` | no |
 | create\_github\_webhook | Create the github webhook that triggers codepipeline | bool | `"true"` | no |
+| s3\_block\_public\_access | \(Optional\) Enable the S3 block public access setting for the artifact bucket. | `bool` | `false` | no |
 
 ## Outputs
 
