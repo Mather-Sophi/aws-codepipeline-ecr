@@ -53,14 +53,33 @@ variable "tags" {
   default     = {}
 }
 
-variable "central_account_github_token_aws_secret_arn" {
-  type        = string
-  description = "(Required) The repo access Github token AWS secret ARN in the central AWS account"
+variable "use_repo_access_github_token" {
+  type        = bool
+  description = <<EOT
+                (Optional) Allow the AWS codebuild IAM role read access to the REPO_ACCESS_GITHUB_TOKEN secrets manager secret in the shared service account.
+                Defaults to false.
+                EOT
+  default     = false
 }
 
-variable "central_account_github_token_aws_kms_cmk_arn" {
+variable "svcs_account_github_token_aws_secret_arn" {
   type        = string
-  description = "(Required) The repo access Github token AWS KMS customer managed key ARN in the central AWS account"
+  description = <<EOT
+                (Optional) The AWS secret ARN for the repo access Github token.
+                The secret is created in the shared service account.
+                Required if var.use_repo_access_github_token is true.
+                EOT
+  default     = null
+}
+
+variable "svcs_account_github_token_aws_kms_cmk_arn" {
+  type        = string
+  description = <<EOT
+                (Optional) The us-east-1 region AWS KMS customer managed key ARN for encrypting the repo access Github token AWS secret.
+                The key is created in the shared service account.
+                Required if var.use_repo_access_github_token is true.
+                EOT
+  default     = null
 }
 
 variable "create_github_webhook" {
@@ -69,3 +88,8 @@ variable "create_github_webhook" {
   default     = true
 }
 
+variable "s3_block_public_access" {
+  type = bool
+  description = "(Optional) Enable the S3 block public access setting for the artifact bucket."
+  default = false
+}
