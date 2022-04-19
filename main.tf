@@ -1,11 +1,6 @@
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
-provider "github" {
-  token = var.github_oauth_token
-  owner = var.github_repo_owner
-}
-
 locals {
   aws_region = data.aws_region.current.name
   account_id = data.aws_caller_identity.current.account_id
@@ -57,7 +52,7 @@ resource "aws_iam_role_policy" "codepipeline_baseline" {
 }
 
 module "codebuild_project" {
-  source = "github.com/globeandmail/aws-codebuild-project?ref=1.8"
+  source = "github.com/globeandmail/aws-codebuild-project?ref=expose_role_ARN"
 
   name                                         = var.name
   deploy_type                                  = "ecr"
