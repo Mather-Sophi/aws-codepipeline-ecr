@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=1.9"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=2.0"
 
   name               = app-name
   ecr_name           = repo-name
@@ -60,7 +60,8 @@ If `use_repo_access_github_token` is set to `true`, the environment variable `RE
 Usage remains the same as v1.7.
 If `s3_block_public_access` is set to `true`, the block public access setting for the artifact bucket is enabled.
 
-
+## 2.0 Note
+Uses aws-codebuild-project 2.0 for AWS provider 4
 ## Inputs
 
 | Name | Description | Type | Default | Required |
