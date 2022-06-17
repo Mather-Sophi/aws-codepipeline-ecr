@@ -1,11 +1,6 @@
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
-provider "github" {
-  token = var.github_oauth_token
-  owner = var.github_repo_owner
-}
-
 locals {
   aws_region = data.aws_region.current.name
   account_id = data.aws_caller_identity.current.account_id
