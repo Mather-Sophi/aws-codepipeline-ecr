@@ -57,7 +57,7 @@ resource "aws_iam_role_policy" "codepipeline_baseline" {
 }
 
 module "codebuild_project" {
-  source = "github.com/globeandmail/aws-codebuild-project?ref=2.1"
+  source = "github.com/Mather-Sophi/aws-codebuild-project?ref=2.2"
 
   name                                         = var.name
   deploy_type                                  = "ecr"
