@@ -5,7 +5,7 @@ Creates a pipeline that builds a container via codebuild and pushes it to an ECR
 
 ```hcl
 module "ecr_pipeline" {
-  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=2.1"
+  source = "github.com/globeandmail/aws-codepipeline-ecr?ref=2.2"
 
   name               = app-name
   ecr_name           = repo-name
@@ -83,6 +83,8 @@ You can add these 8 lines to the end of your `build` phase commands in `buildspe
       - echo "Running Sysdig image cli scan..."
       - SECURE_API_TOKEN=${SYSDIG_API_TOKEN_SECRETS_ID} ./sysdig-cli-scanner --apiurl https://us2.app.sysdig.com ${REPOSITORY_URI}:${IMAGE_TAG} --policy sysdig_best_practices || true
 ```
+## v.2.2 Note
+The `aws-codebuild-project` version is upgraded to version `2.2` to override AWS S3 bucket default ACL setting. The AWS S3 security changes can be found in the AWS blog [here](https://aws.amazon.com/blogs/aws/heads-up-amazon-s3-security-changes-are-coming-in-april-of-2023/)
 
 ## Inputs
 
