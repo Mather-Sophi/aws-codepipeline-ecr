@@ -98,6 +98,7 @@ The `aws-codebuild-project` version is upgraded to version `2.2` to override AWS
 | github\_branch\_name | The git branch name to use for the codebuild project | string | `"master"` | no |
 | buildspec | The name of the buildspec file to use | string | buildspec.yml | no |
 | codebuild\_image | The codebuild image to use | string | `"null"` | no |
+| build\_compute\_type | Build environment compute type | string | `"null"` | no |
 | tags | A mapping of tags to assign to the resource | map | `{}` | no |
 | use\_repo\_access\_github\_token | \(Optional\) Allow the AWS codebuild IAM role read access to the REPO\_ACCESS\_GITHUB\_TOKEN secrets manager secret in the shared service account.<br>Defaults to false. | `bool` | `false` | no |
 | svcs\_account\_github\_token\_aws\_secret\_arn | \(Optional\) The AWS secret ARN for the repo access Github token.<br>The secret is created in the shared service account.<br>Required if var.use\_repo\_access\_github\_token is true. | `string` | `null` | no |

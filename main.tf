@@ -64,6 +64,7 @@ module "codebuild_project" {
   ecr_name                                     = var.ecr_name
   buildspec                                    = var.buildspec
   use_docker_credentials                       = var.use_docker_credentials
+  build_compute_type                           = var.build_compute_type
   tags                                         = var.tags
   use_repo_access_github_token                 = var.use_repo_access_github_token
   svcs_account_github_token_aws_secret_arn     = var.svcs_account_github_token_aws_secret_arn

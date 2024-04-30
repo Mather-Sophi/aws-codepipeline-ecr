@@ -41,6 +41,12 @@ variable "codebuild_image" {
   default     = null
 }
 
+variable "build_compute_type" {
+  type        = string
+  description = "(Optional) build environment compute type"
+  default     = "BUILD_GENERAL1_SMALL"
+}
+
 variable "use_docker_credentials" {
   type        = bool
   description = "(Optional) Use dockerhub credentals stored in parameter store"
